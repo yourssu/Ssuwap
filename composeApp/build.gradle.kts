@@ -33,6 +33,12 @@ kotlin {
             implementation(libs.androidx.navigation3.runtime)
         }
         commonMain.dependencies {
+            implementation(projects.ssuwap.feature.home)
+            implementation(projects.ssuwap.feature.camera)
+            implementation(projects.ssuwap.feature.imageselect)
+            implementation(projects.ssuwap.feature.transformloading)
+            implementation(projects.ssuwap.feature.transformresult)
+
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
