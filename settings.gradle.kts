@@ -15,6 +15,9 @@ pluginManagement {
         }
         mavenCentral()
         gradlePluginPortal()
+
+        // Kotlin Dev 이후 2.3.20 정규 베타 나오면 삭제
+        maven("https://packages.jetbrains.team/maven/p/kt/dev/")
     }
 }
 
@@ -28,6 +31,9 @@ dependencyResolutionManagement {
             }
         }
         mavenCentral()
+
+        // Kotlin Dev 이후 2.3.20 정규 베타 나오면 삭제
+        maven("https://packages.jetbrains.team/maven/p/kt/dev/")
     }
 }
 
