@@ -1,4 +1,3 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -6,6 +5,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.metro)
 }
 
 kotlin {
@@ -14,7 +14,7 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    
+
     listOf(
         iosArm64(),
         iosSimulatorArm64()
@@ -24,13 +24,21 @@ kotlin {
             isStatic = true
         }
     }
-    
+
     sourceSets {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.androidx.navigation3.ui)
+            implementation(libs.androidx.navigation3.runtime)
         }
         commonMain.dependencies {
+            implementation(projects.ssuwap.feature.home)
+            implementation(projects.ssuwap.feature.camera)
+            implementation(projects.ssuwap.feature.imageselect)
+            implementation(projects.ssuwap.feature.transformloading)
+            implementation(projects.ssuwap.feature.transformresult)
+
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
@@ -39,11 +47,23 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.okhttp)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
+
+        iosMain.dependencies {
+            implementation(libs.navigationCompose)
+        }
     }
+
+    compilerOptions {
+        freeCompilerArgs.add("-Xcontext-parameters")
+    }
+
 }
 
 android {
