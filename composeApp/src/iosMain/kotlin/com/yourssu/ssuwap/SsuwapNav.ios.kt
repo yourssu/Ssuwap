@@ -16,7 +16,9 @@ actual fun SsuwapNav() {
         navController = navController,
         startDestination = HomeRoute,
     ) {
-        homeScreen()
+        homeScreen(
+            navController = navController
+        )
         cameraScreen()
         imageSelectScreen()
         transformLoadingScreen()

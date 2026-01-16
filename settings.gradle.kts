@@ -39,7 +39,7 @@ dependencyResolutionManagement {
 
 include(":composeApp")
 include(":feature:home")
-include(":feature:camera")
 include(":feature:imageselect")
+include(":feature:camera")
 include(":feature:transformloading")
 include(":feature:transformresult")
