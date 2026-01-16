@@ -1,5 +1,6 @@
 package com.yourssu.convention
 
+import com.yourssu.convention.extension.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -24,6 +25,9 @@ class KmpComposeConventionPlugin : Plugin<Project> {
                         implementation(compose.ui)
                         implementation(compose.components.resources)
                         implementation(compose.components.uiToolingPreview)
+
+                        implementation(libs.findLibrary("androidx.lifecycle.runtimeCompose").get())
+                        implementation(libs.findLibrary("androidx.runtime.retain").get())
                     }
 
                     find { it.name == "androidMain" }?.apply {
