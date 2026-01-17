@@ -13,11 +13,11 @@ fun NavController.navigateToHome() {
 
 context(appGraph: AppGraph)
 fun NavGraphBuilder.homeScreen(
-    navController: NavController
+    onNavigateToImageSelect: () -> Unit,
 ) {
     composable<HomeRoute> {
         HomeScreen(
-            onNavigateToImageSelect = { navController.navigateToImageSelect() }
+            onNavigateToImageSelect = onNavigateToImageSelect,
         )
     }
 }

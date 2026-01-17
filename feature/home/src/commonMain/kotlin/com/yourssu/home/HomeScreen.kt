@@ -20,7 +20,6 @@ fun HomeScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-
         Button(
             onClick = onNavigateToImageSelect,
         ) {

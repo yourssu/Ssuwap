@@ -17,7 +17,7 @@ actual fun SsuwapNav() {
         startDestination = HomeRoute,
     ) {
         homeScreen(
-            navController = navController
+            onNavigateToImageSelect = navController::navigateToImageSelect,
         )
         cameraScreen()
         imageSelectScreen()
