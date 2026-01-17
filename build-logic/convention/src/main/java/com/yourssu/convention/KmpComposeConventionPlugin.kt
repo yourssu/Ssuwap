@@ -17,22 +17,25 @@ class KmpComposeConventionPlugin : Plugin<Project> {
                 val compose = extensions.getByType(ComposePlugin.Dependencies::class.java)
 
                 with(sourceSets) {
+                    configureEach {
+                        if (name == "commonMain") {
+                            dependencies {
+                                implementation(compose.runtime)
+                                implementation(compose.foundation)
+                                implementation(compose.material3)
+                                implementation(compose.ui)
+                                implementation(compose.components.resources)
+                                implementation(compose.components.uiToolingPreview)
 
-                    getByName("commonMain").dependencies {
-                        implementation(compose.runtime)
-                        implementation(compose.foundation)
-                        implementation(compose.material3)
-                        implementation(compose.ui)
-                        implementation(compose.components.resources)
-                        implementation(compose.components.uiToolingPreview)
+                                implementation(libs.findLibrary("androidx.lifecycle.runtimeCompose").get())
+                                implementation(libs.findLibrary("androidx.runtime.retain").get())
+                            }
+                        }
 
-                        implementation(libs.findLibrary("androidx.lifecycle.runtimeCompose").get())
-                        implementation(libs.findLibrary("androidx.runtime.retain").get())
-                    }
-
-                    find { it.name == "androidMain" }?.apply {
-                        dependencies {
-                            implementation(compose.preview)
+                        if (name == "androidMain") {
+                            dependencies {
+                                implementation(compose.preview)
+                            }
                         }
                     }
                 }

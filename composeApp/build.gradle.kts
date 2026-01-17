@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.ssuwap.android.application)
@@ -8,6 +10,13 @@ plugins {
 }
 
 kotlin {
+
+    androidTarget {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_11)
+        }
+    }
+
     sourceSets {
         androidMain.dependencies {
             implementation(compose.preview)
@@ -16,6 +25,7 @@ kotlin {
             implementation(libs.androidx.navigation3.runtime)
         }
         commonMain.dependencies {
+            implementation(projects.ssuwap.core.designsystem)
             implementation(projects.ssuwap.feature.home)
             implementation(projects.ssuwap.feature.camera)
             implementation(projects.ssuwap.feature.imageselect)
@@ -36,6 +46,10 @@ kotlin {
         iosMain.dependencies {
             implementation(libs.navigationCompose)
         }
+    }
+
+    compilerOptions {
+        freeCompilerArgs.add("-Xcontext-parameters")
     }
 
 }
