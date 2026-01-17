@@ -4,7 +4,9 @@ import ComposeApp
 
 struct ComposeView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {
-        MainViewControllerKt.MainViewController()
+        let appGraph = IosAppEntryPoint.shared.createGraph()
+
+        return MainViewControllerKt.MainViewController(appGraph: appGraph)
     }
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}

@@ -1,13 +1,14 @@
 plugins {
-    id("java-library")
-    alias(libs.plugins.jetbrainsKotlinJvm)
+    alias(libs.plugins.ssuwap.kmp.feature)
 }
-java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
-}
+
+android.namespace = "com.yourssu.home"
+
 kotlin {
-    compilerOptions {
-        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
+    sourceSets {
+        commonMain.dependencies {
+            implementation(libs.androidx.lifecycle.runtimeCompose)
+            implementation(libs.androidx.runtime.retain)
+        }
     }
 }
