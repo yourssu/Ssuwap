@@ -5,6 +5,7 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import com.yourssu.home.HomeScreen
+import com.yourssu.imageselect.ImageSelectScreen
 import com.yourssu.ssuwap.navigation.CameraNavKey
 import com.yourssu.ssuwap.navigation.HomeNavKey
 import com.yourssu.ssuwap.navigation.ImageSelectNavKey
@@ -26,7 +27,7 @@ actual fun SsuwapNav() {
                 )
             }
             entry<ImageSelectNavKey> {
-
+                ImageSelectScreen()
             }
             entry<CameraNavKey> {
 
