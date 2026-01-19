@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.PhotoCamera
@@ -24,6 +23,10 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.retain.retain
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,10 +39,28 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.yourssu.designsystem.theme.WavyCircleShape
+import dev.zacsweers.metro.Inject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ImageSelectScreen() {
+context(graph: ImageSelectGraph)
+fun ImageSelectScreen(
+    onNavigateToCamera: () -> Unit,
+    onNavigateToTransformResult: () -> Unit,
+    modifier: Modifier = Modifier,
+    cameraResultUri: String? = null,
+) {
+
+    LaunchedEffect(Unit) {
+        onNavigateToTransformResult()
+    }
+
+    val controller = retain { graph.provideImageSelectController() }
+    val isImageSelected by derivedStateOf { controller.isImageSelected() }
+
+    LaunchedEffect(cameraResultUri) {
+        controller.onCameraResult(cameraResultUri)
+    }
 
     Scaffold(
         topBar = {
@@ -55,6 +76,7 @@ fun ImageSelectScreen() {
                     .fillMaxWidth()
                     .padding(16.dp)
                     .height(56.dp),
+                enabled = isImageSelected,
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
             ) {
                 Text("슝슝이로 변신!")
@@ -62,7 +84,7 @@ fun ImageSelectScreen() {
         }
     ) { padding ->
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .padding(padding)
                 .fillMaxSize()
                 .padding(16.dp),
@@ -75,29 +97,42 @@ fun ImageSelectScreen() {
                     .weight(1f)
                     .fillMaxWidth()
                     .drawBehind {
-                        drawRoundRect(
-                            color = Color(0xFF3388BD),
-                            style = Stroke(
-                                width = 4.dp.toPx(),
-                                pathEffect = PathEffect.dashPathEffect(floatArrayOf(20f, 20f), 0f)
-                            ),
-                            cornerRadius = CornerRadius(24.dp.toPx())
-                        )
+                        if(isImageSelected) {
+                            drawRoundRect(
+                                color = Color(0xFF3388BD),
+                                style = Stroke(
+                                    width = 4.dp.toPx(),
+                                    pathEffect = PathEffect.dashPathEffect(
+                                        floatArrayOf(20f, 20f),
+                                        0f
+                                    )
+                                ),
+                                cornerRadius = CornerRadius(24.dp.toPx())
+                            )
+                        }
                     }
                     .clip(RoundedCornerShape(24.dp)),
                 contentAlignment = Alignment.Center
             ) {
-                SelectionPlaceholder(
-                    onCameraClick = { },
-                    onGalleryClick = { }
-                )
+                if(isImageSelected) {
+
+                } else {
+                    SelectionPlaceholder(
+                        onCameraClick = onNavigateToCamera,
+                        onGalleryClick = controller::onGalleryClick
+                    )
+                }
             }
         }
     }
 }
 
+@Inject
 @Composable
-fun SelectionPlaceholder(onCameraClick: () -> Unit, onGalleryClick: () -> Unit) {
+fun SelectionPlaceholder(
+    onCameraClick: () -> Unit,
+    onGalleryClick: () -> Unit
+) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
             text = "사진을 촬영하거나\n갤러리에서 사진을 선택해주세요.",

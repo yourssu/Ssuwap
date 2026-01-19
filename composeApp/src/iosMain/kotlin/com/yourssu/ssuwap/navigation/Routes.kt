@@ -12,7 +12,4 @@ data object ImageSelectRoute
 data object CameraRoute
 
 @Serializable
-data object TransformLoadingRoute
-
-@Serializable
 data object TransformResultRoute

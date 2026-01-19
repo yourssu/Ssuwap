@@ -3,6 +3,7 @@ package com.yourssu.ssuwap.navigation.extension
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.yourssu.camera.CameraScreen
 import com.yourssu.ssuwap.AppGraph
 import com.yourssu.ssuwap.navigation.CameraRoute
 
@@ -12,9 +13,11 @@ fun NavController.navigateToCamera() {
 
 context(appGraph: AppGraph)
 fun NavGraphBuilder.cameraScreen(
-
+    onPhotoCaptured: (String) -> Unit
 ) {
     composable<CameraRoute> {
-
+        CameraScreen(
+            onPhotoCaptured = onPhotoCaptured
+        )
     }
 }
