@@ -40,26 +40,30 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.yourssu.designsystem.theme.WavyCircleShape
 import dev.zacsweers.metro.Inject
+import soil.query.compose.rememberMutation
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 context(graph: ImageSelectGraph)
 fun ImageSelectScreen(
     onNavigateToCamera: () -> Unit,
-    onNavigateToTransformResult: () -> Unit,
+    onNavigateToTransformResult: (String) -> Unit,
     modifier: Modifier = Modifier,
     cameraResultUri: String? = null,
 ) {
 
-    LaunchedEffect(Unit) {
-        onNavigateToTransformResult()
-    }
-
-    val controller = retain { graph.provideImageSelectController() }
+    val controller = retain { graph.imageSelectController }
+    val mutation = rememberMutation(graph.transformImageMutation)
     val isImageSelected by derivedStateOf { controller.isImageSelected() }
 
     LaunchedEffect(cameraResultUri) {
         controller.onCameraResult(cameraResultUri)
+    }
+
+    LaunchedEffect(mutation.isSuccess) {
+        if(mutation.isSuccess) {
+            onNavigateToTransformResult(mutation.data!!)
+        }
     }
 
     Scaffold(
@@ -83,6 +87,14 @@ fun ImageSelectScreen(
             }
         }
     ) { padding ->
+        if(mutation.isPending) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+            ) {
+
+            }
+            return@Scaffold
+        }
         Column(
             modifier = modifier
                 .padding(padding)

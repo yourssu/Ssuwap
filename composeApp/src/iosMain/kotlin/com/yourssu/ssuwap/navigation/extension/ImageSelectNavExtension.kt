@@ -17,7 +17,7 @@ fun NavController.navigateToImageSelect() {
 context(appGraph: AppGraph)
 fun NavGraphBuilder.imageSelectScreen(
     onNavigateToCamera: () -> Unit,
-    onNavigateToTransformResult: () -> Unit,
+    onNavigateToTransformResult: (String) -> Unit,
     navController: NavHostController,
 ) {
     composable<ImageSelectRoute> {
@@ -34,7 +34,7 @@ fun NavGraphBuilder.imageSelectScreen(
             ImageSelectScreen(
                 onNavigateToCamera = onNavigateToCamera,
                 onNavigateToTransformResult = onNavigateToTransformResult,
-                cameraResult = cameraResult,
+                cameraResultUri = cameraResult,
             )
         }
     }

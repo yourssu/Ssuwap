@@ -12,4 +12,6 @@ data object ImageSelectRoute
 data object CameraRoute
 
 @Serializable
-data object TransformResultRoute
+data class TransformResultRoute(
+    val resultUri: String
+)
