@@ -34,6 +34,7 @@ runtimeRetain = "1.10.0"
 kotlinStdlib = "2.3.20-Beta1"
 runner = "1.7.0"
 core = "1.7.0"
+activityCompose = "1.12.2"
 
 [libraries]
 generativeai-google = { module = "dev.shreyaspatil.generativeai:generativeai-google", version.ref = "generativeaiGoogle" }

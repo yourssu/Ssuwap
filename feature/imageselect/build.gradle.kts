@@ -25,5 +25,9 @@ kotlin {
             implementation(libs.androidx.runtime.retain)
             implementation(libs.generativeai.google)
         }
+
+        androidMain.dependencies {
+            implementation(libs.androidx.activity.compose)
+        }
     }
 }
