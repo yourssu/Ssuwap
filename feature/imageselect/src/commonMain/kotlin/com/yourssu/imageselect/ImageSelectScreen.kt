@@ -42,6 +42,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.yourssu.designsystem.theme.WavyCircleShape
+import com.yourssu.imageselect.model.LoadingSsungSsungPath
 import dev.zacsweers.metro.Inject
 import kotlinx.coroutines.launch
 import soil.query.compose.rememberMutation
@@ -113,10 +114,21 @@ fun ImageSelectScreen(
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxWidth(),
+                    contentAlignment = Alignment.Center,
                 ) {
+                    SvgPathLoadingIndicator(
+                        pathData = LoadingSsungSsungPath.path,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier
+                            .size(500.dp),
+                        strokeWidth = 5.dp
+                    )
+                    Spacer(Modifier.height(16.dp))
                     Text(
-                        text = "변환 중입니다...",
-                        modifier = Modifier.align(Alignment.Center)
+                        text = "슝슝이로 변신 중...",
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
                 return@Column
