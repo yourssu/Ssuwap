@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.yourssu.ssuwap.AppGraph
 import com.yourssu.ssuwap.navigation.TransformResultRoute
+import com.yourssu.transformresult.TransformResultScreen
 
 fun NavController.navigateToTransformResult(result: String) {
     navigate(TransformResultRoute(resultUri = result))
@@ -13,10 +14,13 @@ fun NavController.navigateToTransformResult(result: String) {
 
 context(appGraph: AppGraph)
 fun NavGraphBuilder.transformResultScreen(
-
+    onNavigateToHome: () -> Unit,
 ) {
     composable<TransformResultRoute> { backStackEntry ->
         val route: TransformResultRoute = backStackEntry.toRoute()
-        route.resultUri
+        TransformResultScreen(
+            imageUri = route.resultUri,
+            onNavigateToHome = onNavigateToHome,
+        )
     }
 }

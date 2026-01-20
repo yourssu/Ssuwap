@@ -12,6 +12,7 @@ import com.yourssu.ssuwap.navigation.CameraNavKey
 import com.yourssu.ssuwap.navigation.HomeNavKey
 import com.yourssu.ssuwap.navigation.ImageSelectNavKey
 import com.yourssu.ssuwap.navigation.TransformResultNavKey
+import com.yourssu.transformresult.TransformResultScreen
 
 @Composable
 context(appGraph: AppGraph)
@@ -39,8 +40,8 @@ actual fun SsuwapNav() {
                     ImageSelectScreen(
                         cameraResultUri = key.selectedUri,
                         onNavigateToCamera = { backStack.add(CameraNavKey) },
-                        onNavigateToTransformResult = {
-                            backStack[backStack.lastIndex] = TransformResultNavKey
+                        onNavigateToTransformResult = { uri ->
+                            backStack[backStack.lastIndex] = TransformResultNavKey(uri)
                         }
                     )
                 }
@@ -56,8 +57,11 @@ actual fun SsuwapNav() {
                     }
                 )
             }
-            entry<TransformResultNavKey> {
-
+            entry<TransformResultNavKey> { key ->
+                TransformResultScreen(
+                    imageUri = key.resultUri,
+                    onNavigateToHome = { backStack.removeLastOrNull() }
+                )
             }
         },
     )

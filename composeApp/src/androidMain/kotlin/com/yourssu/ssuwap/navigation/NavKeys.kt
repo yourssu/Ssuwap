@@ -15,4 +15,6 @@ data class ImageSelectNavKey(
 data object CameraNavKey : NavKey
 
 @Serializable
-data object TransformResultNavKey : NavKey
+data class TransformResultNavKey(
+    val resultUri: String
+) : NavKey

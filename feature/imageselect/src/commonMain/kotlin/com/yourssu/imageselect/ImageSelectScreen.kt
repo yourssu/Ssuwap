@@ -80,23 +80,25 @@ fun ImageSelectScreen(
             )
         },
         bottomBar = {
-            BottomAppBar {
-                Button(
-                    onClick = {
-                        controller.selectedImageUri?.let { uri ->
-                            scope.launch {
-                                mutation.mutate(uri)
+            if(!mutation.isPending) {
+                BottomAppBar {
+                    Button(
+                        onClick = {
+                            controller.selectedImageUri?.let { uri ->
+                                scope.launch {
+                                    mutation.mutate(uri)
+                                }
                             }
-                        }
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                        .height(56.dp),
-                    enabled = isImageSelected,
-                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
-                ) {
-                    Text("슝슝이로 변신!")
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                            .height(56.dp),
+                        enabled = isImageSelected,
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
+                    ) {
+                        Text("슝슝이로 변신!")
+                    }
                 }
             }
         }
