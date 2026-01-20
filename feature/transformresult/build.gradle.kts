@@ -9,6 +9,8 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.androidx.runtime.retain)
+
+            implementation(libs.coil.compose)
         }
     }
 }

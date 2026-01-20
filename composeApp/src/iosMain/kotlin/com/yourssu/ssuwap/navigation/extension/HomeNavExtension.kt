@@ -8,7 +8,9 @@ import com.yourssu.ssuwap.AppGraph
 import com.yourssu.ssuwap.navigation.HomeRoute
 
 fun NavController.navigateToHome() {
-    navigate(HomeRoute)
+    navigate(HomeRoute) {
+        popUpTo(HomeRoute)
+    }
 }
 
 context(appGraph: AppGraph)

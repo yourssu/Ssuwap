@@ -4,6 +4,7 @@ import Ssuwap.feature.imageselect.BuildConfig
 import com.yourssu.imageselect.api.ImageDataSource
 import com.yourssu.imageselect.query.TransformImageMutation
 import dev.shreyaspatil.ai.client.generativeai.GenerativeModel
+import dev.shreyaspatil.ai.client.generativeai.type.generationConfig
 import dev.zacsweers.metro.GraphExtension
 import dev.zacsweers.metro.Provides
 
@@ -23,8 +24,8 @@ interface ImageSelectGraph {
     @Provides
     fun provideGenerativeModel(): GenerativeModel {
         return GenerativeModel(
-            modelName = "gemini-3-flash-preview",
-            apiKey = BuildConfig.GEMINI_API_KEY
+            modelName = "gemini-2.5-flash-image",
+            apiKey = BuildConfig.GEMINI_API_KEY,
         )
     }
 

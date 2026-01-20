@@ -31,6 +31,10 @@
                 onNavigateToTransformResult = navController::navigateToTransformResult,
                 navController = navController,
             )
-            transformResultScreen()
+            transformResultScreen(
+                onNavigateToHome = {
+                    navController::navigateToHome
+                },
+            )
         }
     }
