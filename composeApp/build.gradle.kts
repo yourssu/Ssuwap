@@ -29,13 +29,17 @@ kotlin {
             implementation(projects.ssuwap.feature.home)
             implementation(projects.ssuwap.feature.camera)
             implementation(projects.ssuwap.feature.imageselect)
-            implementation(projects.ssuwap.feature.transformloading)
             implementation(projects.ssuwap.feature.transformresult)
 
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
 
             implementation(libs.coil.compose)
+
+            implementation(libs.soil.query.core)
+            implementation(libs.soil.query.compose)
+            implementation(libs.soil.form)
+            implementation(libs.soil.space)
 
             implementation(libs.kotlinx.serialization.json)
         }

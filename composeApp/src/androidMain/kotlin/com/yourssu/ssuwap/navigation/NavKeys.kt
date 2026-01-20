@@ -7,13 +7,12 @@ import kotlinx.serialization.Serializable
 data object HomeNavKey : NavKey
 
 @Serializable
-data object ImageSelectNavKey : NavKey
+data class ImageSelectNavKey(
+    val selectedUri: String? = null
+) : NavKey
 
 @Serializable
 data object CameraNavKey : NavKey
-
-@Serializable
-data object TransformLoadingNavKey : NavKey
 
 @Serializable
 data object TransformResultNavKey : NavKey

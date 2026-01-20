@@ -1,3 +1,8 @@
 package com.yourssu.ssuwap
 
-interface AppGraph
+import com.yourssu.imageselect.ImageLauncher
+import com.yourssu.imageselect.ImageSelectGraph
+
+interface AppGraph : ImageSelectGraph.Factory {
+    val imageLauncher: ImageLauncher
+}

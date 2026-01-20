@@ -5,6 +5,9 @@ import coil3.ImageLoader
 import coil3.compose.setSingletonImageLoaderFactory
 import coil3.request.crossfade
 import com.yourssu.designsystem.theme.SsuwapTheme
+import soil.query.SwrCache
+import soil.query.SwrCacheScope
+import soil.query.compose.SwrClientProvider
 
 @Composable
 context(appGraph: AppGraph)
@@ -15,9 +18,9 @@ fun SsuwapApp() {
             .crossfade(true)
             .build()
     }
-
-    SsuwapTheme {
-        SsuwapAppUi()
+    SwrClientProvider(SwrCache(SwrCacheScope())) {
+        SsuwapTheme {
+            SsuwapAppUi()
+        }
     }
-
 }
