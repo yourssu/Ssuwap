@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.PhotoCamera
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -26,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.retain.retain
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,8 +40,10 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import com.yourssu.designsystem.theme.WavyCircleShape
 import dev.zacsweers.metro.Inject
+import kotlinx.coroutines.launch
 import soil.query.compose.rememberMutation
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -55,6 +59,7 @@ fun ImageSelectScreen(
     val controller = retain { graph.imageSelectController }
     val mutation = rememberMutation(graph.transformImageMutation)
     val isImageSelected by derivedStateOf { controller.isImageSelected() }
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(cameraResultUri) {
         controller.onCameraResult(cameraResultUri)
@@ -74,27 +79,27 @@ fun ImageSelectScreen(
             )
         },
         bottomBar = {
-            Button(
-                onClick = {  },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-                    .height(56.dp),
-                enabled = isImageSelected,
-                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
-            ) {
-                Text("슝슝이로 변신!")
+            BottomAppBar {
+                Button(
+                    onClick = {
+                        controller.selectedImageUri?.let { uri ->
+                            scope.launch {
+                                mutation.mutate(uri)
+                            }
+                        }
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                        .height(56.dp),
+                    enabled = isImageSelected,
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
+                ) {
+                    Text("슝슝이로 변신!")
+                }
             }
         }
     ) { padding ->
-        if(mutation.isPending) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-            ) {
-
-            }
-            return@Scaffold
-        }
         Column(
             modifier = modifier
                 .padding(padding)
@@ -103,36 +108,52 @@ fun ImageSelectScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(Modifier.height(16.dp))
-
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
-                    .drawBehind {
-                        if(isImageSelected) {
-                            drawRoundRect(
-                                color = Color(0xFF3388BD),
-                                style = Stroke(
-                                    width = 4.dp.toPx(),
-                                    pathEffect = PathEffect.dashPathEffect(
-                                        floatArrayOf(20f, 20f),
-                                        0f
-                                    )
-                                ),
-                                cornerRadius = CornerRadius(24.dp.toPx())
-                            )
-                        }
-                    }
-                    .clip(RoundedCornerShape(24.dp)),
-                contentAlignment = Alignment.Center
-            ) {
-                if(isImageSelected) {
-
-                } else {
-                    SelectionPlaceholder(
-                        onCameraClick = onNavigateToCamera,
-                        onGalleryClick = controller::onGalleryClick
+            if (mutation.isPending) {
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                ) {
+                    Text(
+                        text = "변환 중입니다...",
+                        modifier = Modifier.align(Alignment.Center)
                     )
+                }
+                return@Column
+            } else {
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth()
+                        .drawBehind {
+                            if (!isImageSelected) {
+                                drawRoundRect(
+                                    color = Color(0xFF3388BD),
+                                    style = Stroke(
+                                        width = 4.dp.toPx(),
+                                        pathEffect = PathEffect.dashPathEffect(
+                                            floatArrayOf(20f, 20f),
+                                            0f
+                                        )
+                                    ),
+                                    cornerRadius = CornerRadius(24.dp.toPx())
+                                )
+                            }
+                        }
+                        .clip(RoundedCornerShape(24.dp)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    if (isImageSelected) {
+                        AsyncImage(
+                            model = controller.selectedImageUri,
+                            contentDescription = "선택된 이미지",
+                        )
+                    } else {
+                        SelectionPlaceholder(
+                            onCameraClick = onNavigateToCamera,
+                            onGalleryClick = controller::onGalleryClick
+                        )
+                    }
                 }
             }
         }

@@ -9,6 +9,7 @@ import androidx.compose.ui.text.font.FontFamily
 private val lightScheme = lightColorScheme(
     primary = primaryBlue,
     surface = surfaceBlue,
+    surfaceContainer = Color.White,
     background = Color.White,
 )
 

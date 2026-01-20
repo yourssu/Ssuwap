@@ -13,7 +13,7 @@ import dev.zacsweers.metro.Provides
 interface AndroidAppGraph : AppGraph {
 
     @Provides
-    fun provideImageLauncher(): ImageLauncher = AndroidImageLauncher()
+    fun provideImageLauncher(): ImageLauncher = AndroidImageLauncher
 
     @Provides
     fun provideImageDataSource(context: Context): ImageDataSource = AndroidImageDataSource(context)

@@ -19,12 +19,13 @@ class MainActivity : ComponentActivity() {
                 val launcher = rememberLauncherForActivityResult(
                     contract = ActivityResultContracts.PickVisualMedia()
                 ) { uri ->
-                    (imageLauncher as? AndroidImageLauncher)?.onResult(uri)
+                    AndroidImageLauncher.onResult(uri)
                 }
 
                 LaunchedEffect(Unit) {
-                    (imageLauncher as? AndroidImageLauncher)?.registerLauncher(launcher)
+                    AndroidImageLauncher.registerLauncher(launcher)
                 }
+
                 SsuwapApp()
             }
         }

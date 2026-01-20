@@ -19,7 +19,7 @@ class TransformImageMutation(
         val imageBytes = imageDataSource.getImageData(uri)
             ?: throw IllegalStateException("Failed to read image data from URI")
 
-        val characterBytes = Res.readBytes("files/ssungssung.png")
+        val characterBytes = Res.readBytes("files/ssungssung.webp")
 
         val response = generativeModel.generateContent(
             content {

@@ -23,7 +23,7 @@ interface ImageSelectGraph {
     @Provides
     fun provideGenerativeModel(): GenerativeModel {
         return GenerativeModel(
-            modelName = "gemini-1.5-flash",
+            modelName = "gemini-3-flash-preview",
             apiKey = BuildConfig.GEMINI_API_KEY
         )
     }
